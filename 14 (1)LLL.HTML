@@ -1,0 +1,3076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT-128 | The Vibe Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            /* The Vibe Palette */
+            --neon-purple: #d946ef;
+            --neon-blue: #06b6d4;
+            --neon-green: #22c55e;
+            --neon-pink: #f43f5e;
+            --neon-yellow: #eab308;
+            --neon-red: #ff003c;
+            --neon-orange: #f97316;
+            
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            
+            --grad-header: linear-gradient(to right, #d946ef, #06b6d4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND VIBES --- */
+        .vibe-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: 
+                linear-gradient(rgba(9,9,11,0.9), rgba(9,9,11,0.95)),
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.03) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.03) 50px);
+            background-size: 100% 100%, 50px 50px, 50px 50px;
+        }
+
+        .memory-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: floatIcon 20s infinite linear;
+            filter: blur(1px);
+        }
+        @keyframes floatIcon {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- NOTIFICATION BAR --- */
+        #notification-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid var(--neon-green);
+            border-left: 5px solid var(--neon-green);
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Space Grotesk';
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            animation: slideIn 0.5s ease-out;
+            max-width: 300px;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .notif-title { font-weight: 800; color: var(--neon-green); font-size: 14px; margin-bottom: 2px; }
+        .notif-body { font-size: 12px; color: #ddd; }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+        }
+        .brand h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--grad-header);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            text-shadow: 0 0 40px rgba(217, 70, 239, 0.4);
+        }
+        .brand p {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .party-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+        }
+        .party-btn:hover {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.5);
+        }
+
+        .music-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .music-btn:hover, .music-btn.playing {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        /* --- NAV --- */
+        .nav-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .nav-scroller {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+            flex-grow: 1;
+            scroll-behavior: smooth;
+        }
+        .nav-scroller::-webkit-scrollbar { display: none; }
+        
+        .main-nav {
+            display: inline-flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.02);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-link.active {
+            background: var(--text-main);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+        }
+
+        .slide-hint-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            min-width: 80px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            animation: pulseBtn 2s infinite;
+        }
+        .slide-hint-btn:hover {
+            background: var(--neon-blue);
+            color: #000;
+        }
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+        }
+
+        /* --- SECTIONS --- */
+        .content-section { display: none; animation: popIn 0.5s ease; }
+        .content-section.active { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* --- TIMELINE SCHEDULER STYLES (NEW VERTICAL LOOK) --- */
+        .controls { display: grid; grid-template-columns: 200px 1fr; gap: 15px; margin-bottom: 25px; }
+        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: #fff; padding: 14px; border-radius: 12px; outline: none; font-family: 'Outfit'; }
+        .day-bar { display: flex; gap: 8px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
+        .d-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: var(--text-muted); padding: 8px 20px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+        .d-btn.active { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(6, 182, 212, 0.1); }
+        
+        /* New Vertical Timeline CSS */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        /* The vertical line */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+            opacity: 0.3;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 60px; /* Space for the line and dot */
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 12px; /* Center on the 2px line at left:20px */
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--card-color);
+            border: 3px solid #09090b;
+            box-shadow: 0 0 10px var(--card-color);
+            z-index: 2;
+        }
+        .timeline-time {
+            font-family: 'Space Grotesk';
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--card-color);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        /* Class Card modified for timeline */
+        .class-card { 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid var(--glass-border); 
+            border-left: 4px solid var(--card-color); /* Strong left accent */
+            border-radius: 12px; 
+            padding: 20px; 
+            backdrop-filter: blur(10px); 
+            transition: 0.3s; 
+        }
+        .class-card:hover { transform: translateX(5px); background: rgba(255,255,255,0.05); }
+        .card-t { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .card-s { font-family: 'Space Grotesk'; font-size: 22px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .card-d { font-size: 14px; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; margin-top: 12px; color: #ccc; }
+
+        /* --- CLUBS & MOVIE STYLES --- */
+        .club-category { margin: 50px 0 25px; font-family: 'Space Grotesk'; font-size: 28px; color: transparent; -webkit-background-clip: text; background-clip: text; font-weight: 700; text-transform: uppercase; letter-spacing: -1px; }
+        .cat-tech { background-image: linear-gradient(to right, var(--neon-blue), var(--neon-green)); }
+        .cat-art { background-image: linear-gradient(to right, var(--neon-pink), var(--neon-yellow)); }
+        .cat-mov { background-image: linear-gradient(to right, #ff4d4d, #f9cb28); }
+        .cat-music { background-image: linear-gradient(to right, #b026ff, #05d9e8); }
+        .cat-bhai { background-image: linear-gradient(to right, #ff003c, #ffffff); }
+        
+        .clubs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        
+        .club-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; text-align: center; transition: 0.3s; position: relative; }
+        .club-card:hover { border-color: var(--theme-color); box-shadow: 0 10px 40px -10px var(--glow-color); transform: translateY(-5px); }
+        
+        /* Updated Club Logo Style for Image Fit */
+        .club-logo { 
+            width: 80px; 
+            height: 80px; 
+            margin: 0 auto 15px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px solid var(--theme-color); 
+            background: rgba(0,0,0,0.3); 
+            box-shadow: 0 0 15px var(--glow-color); 
+            overflow: hidden; /* Ensures image stays inside circle */
+            padding: 0; /* Remove padding so image fills space */
+        }
+        
+        .club-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Keeps aspect ratio and fills the circle */
+            border-radius: 50%;
+        }
+
+        /* Fallback for text logos if any remain */
+        .club-logo-text {
+            font-family: 'Space Grotesk'; 
+            font-weight: 800; 
+            font-size: 32px; 
+            color: var(--theme-color);
+        }
+        
+        .club-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; color: #fff; }
+        .club-full { font-size: 12px; color: var(--theme-color); font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+        .club-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+        
+        .insta-link { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #000; padding: 8px 16px; border-radius: 30px; font-weight: 700; font-size: 13px; text-decoration: none; transition: 0.2s; }
+        
+        .insta-icon-img {
+            width: 18px; height: 18px; object-fit: contain; vertical-align: middle;
+        }
+
+        .insta-link:hover { transform: scale(1.05); background: #eee; }
+
+        /* JYC SPECIAL CARD */
+        .club-card.jyc-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(255,0,60,0.1), rgba(0,0,0,0.5));
+            border: 2px solid var(--neon-red);
+            box-shadow: 0 0 30px rgba(255,0,60,0.3);
+        }
+        .jyc-card .club-logo { width: 100px; height: 100px; border-color: var(--neon-red); box-shadow: 0 0 25px rgba(255,0,60,0.5); }
+
+        /* --- MESS MENU STYLES --- */
+        .mess-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .menu-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px;
+            position: relative; overflow: hidden;
+        }
+        .menu-day { 
+            font-family: 'Space Grotesk'; font-size: 24px; font-weight: 800; color: var(--day-color); 
+            text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+        .menu-list { list-style: none; padding: 0; }
+        .menu-list li { margin-bottom: 8px; font-size: 15px; color: #eee; display: flex; align-items: center; gap: 10px; }
+        .menu-tag { font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; margin-top: 10px; display: inline-block; color: var(--day-color); }
+        .vs-badge { position: absolute; top: 10px; right: 10px; font-size: 12px; font-weight: 800; background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; transform: rotate(10deg); }
+
+        /* MESS PRICE TAG */
+        .mess-price-tag {
+            background: linear-gradient(45deg, #10b981, #06b6d4);
+            color: #000;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-family: 'Space Grotesk';
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+            transform: none;
+            border: 2px solid #fff;
+        }
+        .mess-price-main { font-size: 20px; }
+        .mess-price-fun { font-size: 12px; font-weight: 600; margin-top: 5px; opacity: 0.9; }
+
+        /* --- NEW CAFETERIA STYLES --- */
+        .cafe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .cafe-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .cafe-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
+        }
+        .cafe-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: bounceEmoji 2s infinite ease-in-out;
+        }
+        @keyframes bounceEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        
+        .cafe-name {
+            font-family: 'Space Grotesk';
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .cafe-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--neon-green);
+            background: rgba(34, 197, 94, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .cafe-fun {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-style: italic;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            padding-top: 8px;
+            line-height: 1.3;
+        }
+
+        /* --- OTT LOGO STYLES (Custom Badges) --- */
+        .ott-badge {
+            display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; 
+            font-size: 8px; 
+            font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase;
+            margin-top: 10px; background: #000; color: #fff; border: 1px solid rgba(255,255,255,0.2);
+            height: 30px;
+        }
+        .ott-logo-img { 
+            width: auto; height: 18px; 
+            margin-right: 6px; object-fit: contain; 
+        }
+        
+        .ott-netflix { border-color: #e50914; color: #e50914; }
+        .ott-prime { border-color: #00a8e1; color: #00a8e1; }
+        .ott-hotstar { border-color: #25cf5e; color: #fff; }
+        .ott-sony { border-color: #faaa15; color: #faaa15; }
+
+        /* --- CRAZY STUFF SPECIFIC --- */
+        .playlist-box { text-align: left; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 16px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
+        .track-list { list-style: none; margin-top: 15px; }
+        .track-list li { margin-bottom: 12px; color: #ccc; font-size: 14px; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .track-list li::before { content: '🎵'; font-size: 10px; }
+        .track-list li a { color: #fff; text-decoration: none; border-bottom: 1px solid transparent; }
+        .track-list li a:hover { color: var(--neon-blue); border-bottom-color: var(--neon-blue); }
+        
+        .creator-playlist {
+            background: linear-gradient(90deg, #ff0000 0%, #282828 100%);
+            padding: 20px; border-radius: 16px; display: flex; align-items: center; gap: 20px;
+            margin-bottom: 30px; text-decoration: none; color: white; transition: transform 0.2s;
+        }
+        .creator-playlist:hover { transform: scale(1.02); }
+        .yt-logo-lg { width: 50px; height: auto; }
+
+        .bhai-quote { 
+            font-family: 'Space Grotesk'; font-size: 24px; font-weight: 700; color: #fff; 
+            border-left: 4px solid var(--neon-red); padding-left: 20px; margin: 30px 0;
+            line-height: 1.4;
+        }
+        
+        .habit-list li { margin-bottom: 10px; color: #ddd; }
+
+        /* --- FINAL DESTINATION --- */
+        .fear-header { font-family: 'Space Grotesk'; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; color: var(--neon-red); text-shadow: 0 0 20px rgba(255, 0, 60, 0.6); margin-bottom: 20px; border-bottom: 1px solid var(--neon-red); padding-bottom: 10px; display: inline-block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: rgba(20, 0, 5, 0.6); border: 1px solid rgba(255, 0, 60, 0.3); border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+        .stat-card:hover { border-color: var(--neon-red); box-shadow: 0 0 30px rgba(255, 0, 60, 0.2); }
+        .stat-year { color: var(--text-muted); font-size: 14px; margin-bottom: 5px; letter-spacing: 2px; }
+        .stat-val { font-family: 'Space Grotesk'; font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+        .stat-label { font-size: 12px; text-transform: uppercase; color: var(--neon-red); font-weight: 700; }
+        .stat-companies { font-size: 11px; color: #aaa; margin-top: 10px; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+        .company-ticker { background: var(--neon-red); color: #000; padding: 10px 0; overflow: hidden; white-space: nowrap; font-weight: 800; font-family: 'Space Grotesk'; font-size: 18px; text-transform: uppercase; margin-bottom: 40px; border-radius: 4px; }
+        .ticker-content { display: inline-block; animation: scrollText 20s linear infinite; }
+        @keyframes scrollText { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* --- CGPA & LADDER --- */
+        .cgpa-container { background: linear-gradient(180deg, rgba(255, 69, 0, 0.05) 0%, rgba(0,0,0,0) 100%); border: 1px solid rgba(255, 69, 0, 0.2); border-radius: 20px; padding: 30px; margin-top: 20px; }
+        .cgpa-title { font-family: 'Space Grotesk'; font-size: 36px; font-weight: 800; background: linear-gradient(to right, #ff4d4d, #f9cb28); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; text-transform: uppercase; letter-spacing: -1px; }
+        .ladder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .ladder-step { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); padding: 20px; border-radius: 12px; position: relative; overflow: hidden; transition: 0.3s; }
+        .ladder-step:hover { transform: translateY(-3px); border-color: var(--step-color); }
+        .step-badge { background: var(--step-color); color: #000; font-weight: 800; padding: 4px 10px; border-radius: 4px; font-size: 12px; display: inline-block; margin-bottom: 10px; }
+        .step-gpa { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: #fff; }
+        .step-desc { font-size: 13px; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+        .disclaimer-box { background: rgba(255, 0, 60, 0.1); border: 1px dashed var(--neon-red); padding: 15px; border-radius: 8px; font-size: 12px; color: #ff8080; text-align: center; margin-top: 30px; font-weight: 600; }
+
+        /* --- CALCULATOR & TIMER --- */
+        .calc-wrapper {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--neon-blue);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+        .calc-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .calc-input label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        .calc-btn {
+            background: var(--neon-blue);
+            color: #000;
+            width: 100%;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .calc-result {
+            margin-top: 20px;
+            text-align: center;
+            font-family: 'Space Grotesk';
+            font-size: 24px;
+            color: var(--neon-green);
+        }
+
+        .countdown-box {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--neon-red);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(255,0,60,0.2);
+        }
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .time-unit { display: flex; flex-direction: column; align-items: center; }
+        .time-val { font-family: 'Space Grotesk'; font-size: 40px; font-weight: 800; color: #fff; text-shadow: 0 0 10px var(--neon-red); }
+        .time-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; }
+        
+        .timer-colon {
+            font-family: 'Space Grotesk';
+            font-size: 40px;
+            color: var(--neon-red);
+            padding-bottom: 15px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- TABLE STYLES --- */
+        .glass-table { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { text-align: left; color: var(--text-muted); font-size: 12px; text-transform: uppercase; padding: 15px; border-bottom: 1px solid var(--glass-border); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 14px; color: #ffffff; }
+        tr:last-child td { border: none; }
+
+        /* --- FOOTER / CREATOR SECTION --- */
+        .site-footer {
+            margin-top: 80px;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px 20px 0 0;
+        }
+        .footer-msg {
+            color: var(--neon-pink);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .creator-box {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+        .creator-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+        .creator-link-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .creator-link-main:hover {
+            color: var(--neon-blue);
+            transform: scale(1.05);
+        }
+        .main-insta-icon {
+            width: 24px; height: 24px; margin-right: 5px;
+        }
+
+        /* --- TRAVEL BUDDY STYLES --- */
+        .travel-form {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .travel-input-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        .travel-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            outline: none;
+        }
+        /* Fix for White Bug in Select Options */
+        select.travel-input option {
+            background-color: #09090b; /* Dark background */
+            color: #fff; /* White text */
+        }
+
+        .travel-btn {
+            background: var(--neon-green);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        .travel-list {
+            display: grid;
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+        }
+        .ride-card {
+            background: rgba(255,255,255,0.08); /* Brighter bg for visibility */
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; 
+            gap: 15px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .ride-card:hover { transform: translateX(5px); background: rgba(255,255,255,0.12); }
+        
+        .ride-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .ride-info { flex: 1; }
+        .ride-route { font-weight: 800; font-size: 18px; color: #fff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .ride-meta { font-size: 13px; color: #ccc; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .ride-poster { font-size: 12px; color: var(--neon-yellow); font-weight: 700; border: 1px solid var(--neon-yellow); padding: 3px 8px; border-radius: 4px; background: rgba(234, 179, 8, 0.1); }
+        .ride-views { font-size: 12px; color: var(--neon-pink); font-weight: 700; display: flex; align-items: center; gap: 4px; animation: pulseView 2s infinite; }
+        
+        @keyframes pulseView { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
+        
+        .ride-actions { display: flex; gap: 10px; }
+        .join-btn {
+            background: var(--neon-blue); /* Filled button for better visibility */
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 800;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+        .join-btn:hover { box-shadow: 0 0 10px var(--neon-blue); }
+        .join-btn.accepted { background: var(--neon-green); color: #000; cursor: default; }
+        
+        .chat-btn {
+            background: transparent;
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.2s;
+            display: none; /* Hidden by default */
+        }
+        .chat-btn.active { display: block; }
+        .chat-btn:hover { background: var(--neon-pink); color: #fff; }
+
+        /* Chat Interface Styles */
+        .chat-section {
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid var(--glass-border);
+            padding-top: 10px;
+            display: none; /* Hidden by default */
+        }
+        .chat-messages {
+            max-height: 100px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #ddd;
+        }
+        .chat-msg { margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 2px; }
+        .chat-msg b { color: var(--neon-blue); }
+        .chat-input-area { display: flex; gap: 10px; }
+        .chat-input { flex: 1; padding: 8px; background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 4px; font-size: 12px; }
+        .chat-send { background: var(--neon-pink); border: none; padding: 5px 15px; border-radius: 4px; color: #fff; font-weight: 700; cursor: pointer; font-size: 11px; }
+
+        /* Mobile */
+        @media (max-width: 768px) { .controls { grid-template-columns: 1fr; } .brand h1 { font-size: 28px; } .timer-grid { gap: 10px; } .time-val { font-size: 24px; } .timer-colon { font-size: 24px; } .ride-header { flex-direction: column; align-items: flex-start; gap: 15px; } .ride-actions { width: 100%; justify-content: space-between; } .join-btn, .chat-btn { flex: 1; text-align: center; } }
+        #confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99; }
+    </style>
+</head>
+<body>
+
+<div class="vibe-bg">
+    <div class="memory-icon" style="left: 10%; animation-duration: 25s;">🎓</div>
+    <div class="memory-icon" style="left: 30%; animation-duration: 18s;">💻</div>
+    <div class="memory-icon" style="left: 50%; animation-duration: 30s;">🎸</div>
+    <div class="memory-icon" style="left: 70%; animation-duration: 22s;">🎨</div>
+    <div class="memory-icon" style="left: 90%; animation-duration: 27s;">🍕</div>
+</div>
+
+<canvas id="confetti"></canvas>
+<audio id="chillAudio" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+</audio>
+
+<div id="notification-bar">
+    <div class="notif-title">🚖 New Ride Alert!</div>
+    <div class="notif-body" id="notif-text">Someone just posted a ride request.</div>
+</div>
+
+<div class="container">
+    <header>
+        <div class="brand">
+            <h1>JIIT-128 HUB</h1>
+            <p>Making Memories // Batch 2025-29</p>
+        </div>
+        <div class="header-actions">
+            <button class="music-btn" onclick="toggleMusic()">
+                <span id="musicIcon">🎵</span> Play Music
+            </button>
+            <button class="party-btn" onclick="fireConfetti()">✨ Vibe Check</button>
+        </div>
+    </header>
+
+    <div class="nav-wrapper">
+        <div class="nav-scroller" id="navScroller">
+            <nav class="main-nav">
+                <div class="nav-link active" onclick="showSection('scheduler')">🗓️ Scheduler</div>
+                <div class="nav-link" onclick="showSection('travel')">🚖 Travel Buddy</div>
+                <div class="nav-link" onclick="showSection('menu')">🍔 Mess Menu</div>
+                <div class="nav-link" onclick="showSection('cafe')">☕ Café</div>
+                <div class="nav-link" onclick="showSection('placements')">😱 Final Dest.</div>
+                <div class="nav-link" onclick="showSection('cgpa')">🚀 Push CGPA</div>
+                <div class="nav-link" onclick="showSection('clubs')">🔥 Clubs</div>
+                <div class="nav-link" onclick="showSection('exams')">💀 Exams</div>
+                <div class="nav-link" onclick="showSection('registration')">📝 Registration</div>
+                <div class="nav-link" onclick="showSection('holidays')">✈️ Breaks</div>
+                <div class="nav-link" onclick="showSection('enjoy')">🍿 Enjoy Life</div>
+                <div class="nav-link" onclick="showSection('crazy')">🤪 Crazy Stuff</div>
+            </nav>
+        </div>
+        <button class="slide-hint-btn" onclick="scrollNavRight()">
+            Slide ➡
+        </button>
+    </div>
+
+    <div id="scheduler" class="content-section active">
+        <div class="controls">
+            <select id="batchSelect" onchange="renderSchedule()"></select>
+            <input type="text" id="search" placeholder="Search for class, faculty, or room..." oninput="renderSchedule()">
+        </div>
+        <div class="day-bar" id="dayNav">
+            <button class="d-btn active" onclick="setDay('Monday')">Mon</button>
+            <button class="d-btn" onclick="setDay('Tuesday')">Tue</button>
+            <button class="d-btn" onclick="setDay('Wednesday')">Wed</button>
+            <button class="d-btn" onclick="setDay('Thursday')">Thu</button>
+            <button class="d-btn" onclick="setDay('Friday')">Fri</button>
+            <button class="d-btn" onclick="setDay('Saturday')">Sat</button>
+        </div>
+        
+        <div class="timeline-container" id="scheduleGrid">
+            </div>
+    </div>
+
+    <div id="travel" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">Pool Pal: Low Budget Travel 🚖</h2>
+            <p style="color:var(--text-muted);">Share Ola/Uber/Rapido. Save money. Travel with College Mates.</p>
+        </div>
+
+        <div class="travel-form">
+            <h3 style="color:var(--neon-green); font-family:'Space Grotesk'; margin-bottom:15px;">🚀 Post a Ride Request</h3>
+            <div class="travel-grid">
+                <div class="travel-input-group">
+                    <label>Your Name</label>
+                    <input type="text" id="posterName" class="travel-input" placeholder="Enter Your Name">
+                </div>
+                <div class="travel-input-group">
+                    <label>From (Pickup)</label>
+                    <input list="locations" id="rideFrom" class="travel-input" placeholder="Start Location" value="JIIT Sector 128">
+                </div>
+                <div class="travel-input-group">
+                    <label>To (Drop)</label>
+                    <input list="locations" id="rideTo" class="travel-input" placeholder="End Location">
+                </div>
+                <div class="travel-input-group">
+                    <label>Time</label>
+                    <input type="time" id="rideTime" class="travel-input">
+                </div>
+                <div class="travel-input-group">
+                    <label>Mode</label>
+                    <select id="rideMode" class="travel-input">
+                        <option value="Any">Any Mode</option>
+                        <option value="Ola/Uber">Ola/Uber (Cab)</option>
+                        <option value="Auto">Auto (3-Wheeler)</option>
+                        <option value="Rapido">Rapido (Bike)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="travel-btn" onclick="postRide()">Post Request</button>
+            
+            <datalist id="locations">
+                <option value="JIIT Sector 128">
+                <option value="Botanical Garden Metro">
+                <option value="Sector-50 Metro">
+                <option value="Sector 104">
+                <option value="Okhla Bird Sanctuary Metro">
+                <option value="Ghaziabad">
+                <option value="Greater Noida">
+                <option value="Pari Chowk">
+            </datalist>
+        </div>
+
+        <h3 style="margin-bottom:20px;">Open Ride Requests</h3>
+        <div id="rideList" class="travel-list">
+            <div style="text-align:center; padding:20px; color:#666;">No active ride requests right now. Be the first!</div>
+        </div>
+    </div>
+
+    <div id="menu" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">Aaj Khane Mein Kya Hai? 😋</h2>
+            <p style="color:var(--text-muted);">The Ultimate Food Battle: Dal vs Paneer vs Aloo.</p>
+        </div>
+
+        <div class="mess-price-tag">
+            <div class="mess-price-main">💰 FOOD CHARGE: Rs. 80/- ($0.95–$0.97 USD)</div>
+            <div class="mess-price-fun">(Saste Nashe ❌ Sasta Khana ✅)</div>
+        </div>
+
+        <div class="mess-grid">
+            <div class="menu-card" style="--day-color:#f43f5e;">
+                <div class="vs-badge">DAL vs PANEER</div>
+                <div class="menu-day">MONDAY</div>
+                <ul class="menu-list">
+                    <li>🍛 Plain Rice</li>
+                    <li>🍲 Arhar Dal</li>
+                    <li>🥘 Matar Paneer</li>
+                    <li>🥖 Chapati / Roti</li>
+                    <li>🥗 Salad</li>
+                    <li>🍮 Semiya Kheer</li>
+                </ul>
+                <span class="menu-tag">✴️ Balanced Protein Day</span>
+            </div>
+
+            <div class="menu-card" style="--day-color:#eab308;">
+                <div class="vs-badge">ALOO STRIKES BACK</div>
+                <div class="menu-day">TUESDAY</div>
+                <ul class="menu-list">
+                    <li>🍚 Rice</li>
+                    <li>🍲 Masoor Dal / Dal Fry</li>
+                    <li>🥔 Aloo Ki Sabji</li>
+                    <li>🥖 Chapati</li>
+                    <li>🥗 Salad</li>
+                    <li>🍬 Jalebi / Sweet</li>
+                </ul>
+                <span class="menu-tag">✴️ Carb + Sweet Combo</span>
+            </div>
+
+            <div class="menu-card" style="--day-color:#22c55e;">
+                <div class="vs-badge">PANEER RETURN</div>
+                <div class="menu-day">WEDNESDAY</div>
+                <ul class="menu-list">
+                    <li>🍛 Jeera Rice</li>
+                    <li>🍲 Mix Dal</li>
+                    <li>🧅 Paneer Do Piyaza</li>
+                    <li>🥖 Chapati</li>
+                    <li>🥗 Pickle + Salad</li>
+                    <li>🍨 Payasam / Sweet</li>
+                </ul>
+                <span class="menu-tag">✴️ Paneer Rich Day</span>
+            </div>
+
+            <div class="menu-card" style="--day-color:#06b6d4;">
+                <div class="vs-badge">CLASSIC VEG WAR</div>
+                <div class="menu-day">THURSDAY</div>
+                <ul class="menu-list">
+                    <li>🍚 Rice</li>
+                    <li>🍲 Dal Tadka / Seasonal</li>
+                    <li>🥘 Mixed Seasonal Sabzi</li>
+                    <li>🥖 Chapati</li>
+                    <li>🥗 Salad / Curd</li>
+                </ul>
+                <span class="menu-tag">✴️ Veggie Heavy Lunch</span>
+            </div>
+
+            <div class="menu-card" style="--day-color:#d946ef;">
+                <div class="vs-badge">CHINESE INVASION</div>
+                <div class="menu-day">FRIDAY</div>
+                <ul class="menu-list">
+                    <li>🍛 Fried Rice / Veg Chowmein</li>
+                    <li>🥘 Veg Manchurian / Dry Sabji</li>
+                    <li>🥖 Chapati / Roti</li>
+                    <li>🥗 Achar + Salad</li>
+                    <li>🍰 Occasional Sweet</li>
+                </ul>
+                <span class="menu-tag">✴️ Indo-Chinese Fusion</span>
+            </div>
+
+            <div class="menu-card" style="--day-color:#f97316;">
+                <div class="vs-badge">MAKHANI FINALE</div>
+                <div class="menu-day">SATURDAY</div>
+                <ul class="menu-list">
+                    <li>🍚 Plain Rice</li>
+                    <li>🍲 Dal Makhani</li>
+                    <li>🥔 Aloo Jeera / Seasonal</li>
+                    <li>🥖 Chapati</li>
+                    <li>🥗 Curd</li>
+                    <li>🍨 Sweet (Sometimes)</li>
+                </ul>
+                <span class="menu-tag">✴️ Weekend Comfort</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="cafe" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">J128 Café: Sasta & Tikau ☕</h2>
+            <p style="color:var(--text-muted);">Hungry? Broke? We got you covered. Best rates in town.</p>
+        </div>
+
+        <div class="cafe-grid">
+            <div class="cafe-card">
+                <div class="cafe-emoji">☕</div>
+                <div class="cafe-name">Desi Chai</div>
+                <div class="cafe-price">₹10</div>
+                <div class="cafe-fun">"Zinda rehne ka tonic. Exam fuel."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">☕</div>
+                <div class="cafe-name">Coffee</div>
+                <div class="cafe-price">₹20</div>
+                <div class="cafe-fun">"Neend bhagao yantra. Bitter truth."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥟</div>
+                <div class="cafe-name">Samosa</div>
+                <div class="cafe-price">₹10</div>
+                <div class="cafe-fun">"Chatni kahan hai? The triangle of happiness."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥪</div>
+                <div class="cafe-name">Bread Pakora</div>
+                <div class="cafe-price">₹20</div>
+                <div class="cafe-fun">"Oily but lovely. Dil ka rasta."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥤</div>
+                <div class="cafe-name">Cold Coffee</div>
+                <div class="cafe-price">₹45</div>
+                <div class="cafe-fun">"Ameero wali feeling. Summer saviour."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🍜</div>
+                <div class="cafe-name">Maggi</div>
+                <div class="cafe-price">₹35</div>
+                <div class="cafe-fun">"2 minute wala jhooth. Hostel staple."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥐</div>
+                <div class="cafe-name">Patties</div>
+                <div class="cafe-price">₹20</div>
+                <div class="cafe-fun">"Canteen classic. Crispy masala."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥘</div>
+                <div class="cafe-name">Pav Bhaji</div>
+                <div class="cafe-price">₹40</div>
+                <div class="cafe-fun">"Butter dhoond rahe ho? Mumbai vibes."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🥯</div>
+                <div class="cafe-name">Kachori + Sabzi</div>
+                <div class="cafe-price">₹20</div>
+                <div class="cafe-fun">"Spicy blast. Breakfast of champions."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🌮</div>
+                <div class="cafe-name">Paneer Kulcha</div>
+                <div class="cafe-price">₹35</div>
+                <div class="cafe-fun">"Protein (kinda). Stuffed goodness."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🍝</div>
+                <div class="cafe-name">Noodles</div>
+                <div class="cafe-price">₹35</div>
+                <div class="cafe-fun">"Desi chowmein. Slurp slurp."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🍚</div>
+                <div class="cafe-name">Idli Sambhar</div>
+                <div class="cafe-price">₹40</div>
+                <div class="cafe-fun">"Healthy... shayad? Dip it good."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🍩</div>
+                <div class="cafe-name">Gulab Jamun</div>
+                <div class="cafe-price">₹15</div>
+                <div class="cafe-fun">"Meetha bomb. Sugar rush instant."</div>
+            </div>
+            <div class="cafe-card">
+                <div class="cafe-emoji">🍟</div>
+                <div class="cafe-name">Chips/Kurkure</div>
+                <div class="cafe-price" style="background:var(--neon-purple); color:#fff;">MRP</div>
+                <div class="cafe-fun">"Hawa kam, chips zyada? Timepass."</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="placements" class="content-section">
+        <h2 class="fear-header">Final Destination 😱</h2>
+        <p style="color:var(--text-muted); margin-bottom:30px;">The endgame. Where legends are made. Batch Stats (2021-2025)</p>
+        
+        <div class="company-ticker">
+            <div class="ticker-content">
+                ATLASSIAN (₹62L) • MICROSOFT (₹55L) • GOOGLE • AMAZON (₹1.15 Cr) • ADOBE • GOLDMAN SACHS • DE SHAW • ZS ASSOCIATES • SAP LABS • INTEL • CISCO • ATLASSIAN (₹62L) • MICROSOFT (₹55L) • GOOGLE • AMAZON • ADOBE
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-year">BATCH 2021-25 (Ongoing)</div>
+                <div class="stat-val" style="color:#22c55e">₹62 LPA</div>
+                <div class="stat-label">Highest Package</div>
+                <div style="margin:15px 0; font-size:24px; font-weight:800; color:#fff;">904</div>
+                <div class="stat-label">Total Offers</div>
+                <div class="stat-companies">Top Recruiters: Atlassian, Microsoft, Google India<br>Total Companies: 260+</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-year">BATCH 2020-24</div>
+                <div class="stat-val" style="color:#22c55e">₹60.71 LPA</div>
+                <div class="stat-label">Highest Package</div>
+                <div style="margin:15px 0; font-size:24px; font-weight:800; color:#fff;">774</div>
+                <div class="stat-label">Total Offers</div>
+                <div class="stat-companies">Top Recruiters: LinkedIn, Microsoft, Cisco<br>Total Companies: 200+</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-year">BATCH 2019-23</div>
+                <div class="stat-val" style="color:#22c55e">₹82.89 LPA</div>
+                <div class="stat-label">Highest Package</div>
+                <div style="margin:15px 0; font-size:24px; font-weight:800; color:#fff;">1069</div>
+                <div class="stat-label">Total Offers</div>
+                <div class="stat-companies">Top Recruiters: Atlassian, Adobe, DE Shaw<br>Placement Rate: ~98%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-year">BATCH 2018-22</div>
+                <div class="stat-val" style="color:#22c55e">₹1.15 Cr</div>
+                <div class="stat-label">Highest Package</div>
+                <div style="margin:15px 0; font-size:24px; font-weight:800; color:#fff;">1383</div>
+                <div class="stat-label">Total Offers</div>
+                <div class="stat-companies">Top Recruiters: Amazon EMEA, Adobe, Google<br>Placement Rate: 99%</div>
+            </div>
+        </div>
+        
+        <div class="glass-table">
+            <table>
+                <thead><tr><th>Batch</th><th>Highest Pkg</th><th>Avg Pkg (CSE)</th><th>Total Offers</th><th>Students Placed</th></tr></thead>
+                <tbody>
+                    <tr><td>2021-25</td><td>₹62.00 LPA</td><td>₹11.13 LPA</td><td>904</td><td>~852</td></tr>
+                    <tr><td>2020-24</td><td>₹60.71 LPA</td><td>₹8.71 LPA</td><td>774</td><td>711</td></tr>
+                    <tr><td>2019-23</td><td>₹82.89 LPA</td><td>₹12.67 LPA</td><td>1069</td><td>763</td></tr>
+                    <tr><td>2018-22</td><td>₹1.15 Cr</td><td>₹13.54 LPA</td><td>1383</td><td>787</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="cgpa" class="content-section">
+        <div class="cgpa-container">
+            <h2 class="cgpa-title">Push Your CGPA 🚀⚠️</h2>
+            <p style="color:var(--text-muted); margin-bottom:30px;">The hard truth about placement eligibility. Don't get filtered out by the machine.</p>
+
+            <div class="ladder-grid">
+                <div class="ladder-step" style="--step-color: #ef4444;">
+                    <div class="step-badge">DANGER ZONE</div>
+                    <div class="step-gpa">6.0 CGPA</div>
+                    <div class="step-desc">
+                        ✅ Eligible for most drives.<br>
+                        ❌ High risk of rejection during resume screening.<br>
+                        ⚠️ Limited to Mass Recruiters & small startups.
+                    </div>
+                </div>
+                <div class="ladder-step" style="--step-color: #eab308;">
+                    <div class="step-badge">SAFE ZONE</div>
+                    <div class="step-gpa">7.0 - 7.5</div>
+                    <div class="step-desc">
+                        ✅ Competitive for Core Companies.<br>
+                        ✅ Decent shot at Good Tech/Analytics roles (ZS, SAP).<br>
+                        🛡️ You are safe from most automated cutoffs.
+                    </div>
+                </div>
+                <div class="ladder-step" style="--step-color: #22c55e;">
+                    <div class="step-badge">GOD MODE</div>
+                    <div class="step-gpa">7.5 - 8.5+</div>
+                    <div class="step-desc">
+                        🔥 Top Tier Product Companies (Amazon, Microsoft).<br>
+                        🔥 Big Tech & High Finance (Goldman, Google).<br>
+                        💎 Best CTC offers & Profiles.
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family:'Space Grotesk'; color:#fff; margin-bottom:15px;">🧠 Estimated Expectations by Tier</h3>
+            <div class="glass-table">
+                <table>
+                    <thead><tr><th>Company Tier</th><th>Target Companies</th><th>Safe CGPA</th></tr></thead>
+                    <tbody>
+                        <tr><td>Tier-1 Product</td><td>Microsoft, Amazon, Atlassian, LinkedIn</td><td style="color:#22c55e; font-weight:700;">7.5 – 8.5+</td></tr>
+                        <tr><td>Big Tech / Fin</td><td>Google, Goldman Sachs, DE Shaw</td><td style="color:#22c55e; font-weight:700;">~8.0+</td></tr>
+                        <tr><td>Good Tech</td><td>ZS, SAP Labs, Cisco, Deloitte</td><td style="color:#eab308; font-weight:700;">~7.0 – 8.0</td></tr>
+                        <tr><td>Mass / IT</td><td>TCS, Infosys, Cognizant, Wipro</td><td style="color:#ef4444; font-weight:700;">6.0 – 7.0</td></tr>
+                        <tr><td>Startups</td><td>Entry-level / Early-stage</td><td>6.0+</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="calc-wrapper">
+                <h3 style="color:var(--neon-blue); font-family:'Space Grotesk'; margin-bottom:20px;">🧮 Dream CGPA Predictor</h3>
+                <div class="calc-inputs">
+                    <div class="calc-input">
+                        <label>Current CGPA</label>
+                        <input type="number" id="currCGPA" placeholder="e.g. 7.2" step="0.01">
+                    </div>
+                    <div class="calc-input">
+                        <label>Credits Completed</label>
+                        <input type="number" id="currCredits" placeholder="e.g. 80">
+                    </div>
+                    <div class="calc-input">
+                        <label>Expected SGPA (Next Sem)</label>
+                        <input type="number" id="nextSGPA" placeholder="e.g. 9.0" step="0.01">
+                    </div>
+                    <div class="calc-input">
+                        <label>Next Sem Credits</label>
+                        <input type="number" id="nextCredits" placeholder="e.g. 22">
+                    </div>
+                </div>
+                <button class="calc-btn" onclick="calculateCGPA()">Predict My Future</button>
+                <div id="calcResult" class="calc-result"></div>
+            </div>
+
+            <div class="disclaimer-box">
+                ⚠️ DISCLAIMER: THIS DATA IS APPROXIMATE BASED ON SENIOR REVIEWS & ONLINE DISCUSSIONS.<br>
+                NOT OFFICIAL JIIT DATA. PLACEMENT CRITERIA SUBJECT TO CHANGE.
+            </div>
+        </div>
+    </div>
+
+    <div id="clubs" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">College Life & Communities</h2>
+            <p style="color:var(--text-muted);">Find your tribe. Build your skills. Make memories.</p>
+        </div>
+
+        <div class="clubs-grid" style="margin-bottom:30px;">
+            <div class="club-card jyc-card">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/c6/95/7b/c6957bf232fc99c369278671ca56b856.jpg" alt="JYC">
+                </div>
+                <div class="club-name" style="color:var(--neon-red); font-size:24px;">Jaypee Youth Club</div>
+                <div class="club-full">HEAD OF ALL CLUBS</div>
+                <div class="club-desc">The governing body. The biggest events. The ultimate authority of campus life.</div>
+                <a href="https://www.instagram.com/jiityouthclub128?igsh=MW93YWQ1d2hxdjFrYg==" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow the Boss
+                </a>
+            </div>
+        </div>
+
+        <div class="club-category cat-tech">🧠 The Brains (Tech & Upskilling)</div>
+        <div class="clubs-grid">
+            <div class="club-card" style="--theme-color: #06b6d4; --glow-color: rgba(6, 182, 212, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/67/0e/af/670eaf4523e896c4e587bc2b87ab0f4a.jpg" alt="CICR">
+                </div>
+                <div class="club-name">CICR</div><div class="club-full">Innovation, Coding & Robotics</div>
+                <div class="club-desc">Where hardware meets physics. Build bots and drones..</div>
+                <a href="https://www.instagram.com/cicr_jiit" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/5d/da/32/5dda323b5eed3d301feba8a5527e6444.jpg" alt="JODC">
+                </div>
+                <div class="club-name">JODC</div><div class="club-full">Open Dev Circle</div>
+                <div class="club-desc">Fostering open-source culture and real-world projects.</div>
+                <a href="https://www.instagram.com/jodc128" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #ef4444; --glow-color: rgba(239, 68, 68, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/31/f4/32/31f432239ca2e860ba47d6d928722fe2.jpg" alt="RPH">
+                </div>
+                <div class="club-name">RPH</div><div class="club-full">Coding, Logic & Skill</div>
+                <div class="club-desc">The ultimate hub for competitive programming and hackathons..</div>
+                <a href="https://www.instagram.com/rph_jiit" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #eab308; --glow-color: rgba(234, 179, 8, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/f9/4a/10/f94a10dc514409040ec1bc167e229e7b.jpg" alt="Innovation">
+                </div>
+                <div class="club-name">Innovation</div><div class="club-full">Entrepreneurship Cell</div>
+                <div class="club-desc">Turning ideas into reality. Startups and business pitches.</div>
+                <a href="https://www.instagram.com/innovation.jiit" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #3b82f6; --glow-color: rgba(59, 130, 246, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/4e/a9/cd/4ea9cd57d903cd5001007a2e4c3a7c2f.jpg" alt="IEEE">
+                </div>
+                <div class="club-name">IEEE JIIT</div><div class="club-full">IEEE Student Branch</div>
+                <div class="club-desc">Research, seminars, and global technical networking.</div>
+                <a href="https://www.instagram.com/ieeesbjiit" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+        </div>
+        <div class="club-category cat-art">🎨 The Soul (Art, Music & Fun)</div>
+        <div class="clubs-grid">
+            <div class="club-card" style="--theme-color: #d946ef; --glow-color: rgba(217, 70, 239, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/bd/fc/a3/bdfca3d67114bee629d15bc1ef2436dc.jpg" alt="Ffortissimo">
+                </div>
+                <div class="club-name">Ffortissimo</div><div class="club-full">Music Society</div>
+                <a href="https://www.instagram.com/ffortissimo_j128" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #f43f5e; --glow-color: rgba(244, 63, 94, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/1f/79/09/1f7909002292e119835198ce7bfc6076.jpg" alt="Panache">
+                </div>
+                <div class="club-name">Panache</div><div class="club-full">Fashion Society</div>
+                <a href="https://www.instagram.com/panache_j128" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #f97316; --glow-color: rgba(249, 115, 22, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/d0/df/85/d0df85c5ae7ce6d76e1ec0cf2df75822.jpg" alt="Abhivyakti">
+                </div>
+                <div class="club-name">Abhivyakti</div><div class="club-full">Dramatics Society</div>
+                <a href="https://www.instagram.com/abhivyaktidramasoc" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/6a/72/c7/6a72c7fe9ee0de3c6ee76e7e65b91be0.jpg" alt="Aakriti">
+                </div>
+                <div class="club-name">Aakriti</div><div class="club-full">Arts Society</div>
+                <a href="https://www.instagram.com/aakritijiit128" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+            <div class="club-card" style="--theme-color: #0ea5e9; --glow-color: rgba(14, 165, 233, 0.2);">
+                <div class="club-logo">
+                    <img src="https://i.pinimg.com/736x/cb/7c/4a/cb7c4a4268444a18fcc36a552131c6d5.jpg" alt="Aura">
+                </div>
+                <div class="club-name">Aura</div><div class="club-full">Photography</div>
+                <a href="https://www.instagram.com/auraphotography.128" target="_blank" class="insta-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="insta-icon-img" alt="Insta">
+                    Follow
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="exams" class="content-section">
+        <div class="countdown-box">
+            <h4 style="color:var(--neon-red); text-transform:uppercase; letter-spacing:2px;">⚠️ Doomsday Clock (Even Sem T1)</h4>
+            <div class="timer-grid" id="examTimer">
+                <div class="time-unit"><div class="time-val" id="t-days">00</div><div class="time-label">Days</div></div>
+                <div class="timer-colon">:</div>
+                <div class="time-unit"><div class="time-val" id="t-hours">00</div><div class="time-label">Hours</div></div>
+                <div class="timer-colon">:</div>
+                <div class="time-unit"><div class="time-val" id="t-mins">00</div><div class="time-label">Mins</div></div>
+                <div class="timer-colon">:</div>
+                <div class="time-unit"><div class="time-val" id="t-secs">00</div><div class="time-label">Secs</div></div>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 40px; margin-bottom: 20px;">Examination Dates</h3>
+        
+        <div class="glass-table">
+            <table>
+                <thead><tr><th>Event</th><th>Odd Sem (2025)</th><th>Even Sem (2026)</th></tr></thead>
+                <tbody>
+                    <tr><td>T1 Examination</td><td>29 Aug - 06 Sep</td><td style="color:var(--neon-blue)">10 - 18 Feb</td></tr>
+                    <tr><td>T2 Examination</td><td>10 - 18 Oct</td><td style="color:var(--neon-blue)">24 Mar - 02 Apr</td></tr>
+                    <tr><td>End Sem Finals</td><td>01 - 13 Dec</td><td style="color:var(--neon-pink); font-weight:700;">11 - 23 May</td></tr>
+                    <tr><td>Make-up Exams</td><td>11 - 15 Nov</td><td>21 - 25 Apr</td></tr>
+                    <tr><td>🎉 JYC Fest</td><td>---</td><td style="color:var(--neon-yellow)">06 - 08 Feb</td></tr>
+                    <tr><td>Classes End</td><td>28 Nov 2025</td><td>08 May 2026</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="registration" class="content-section">
+        <h3 style="margin-bottom: 20px;">Registration Details</h3>
+        <div class="glass-table">
+            <table>
+                <thead><tr><th>Category</th><th>Odd Sem</th><th>Even Sem</th></tr></thead>
+                <tbody>
+                    <tr><td>Existing Students</td><td>24 Jul 2025</td><td>02 Jan 2026</td></tr>
+                    <tr><td>1st Sem UG</td><td>10 Jul 2025</td><td>05 Jan 2026</td></tr>
+                    <tr><td>Add/Drop Ends</td><td>31 Jul 2025</td><td style="color:var(--neon-pink)">09 Jan 2026</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="holidays" class="content-section">
+        <h3 style="margin-bottom: 40px;">Breaks & Holidays (2025-26)</h3>
+        <div class="glass-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center; color:var(--neon-blue);">ODD SEMESTER (2025)</th>
+                    </tr>
+                    <tr><th>Holiday</th><th>Date</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>🧶 Rakshabandhan</td><td>09 Aug’ 25 (Sat)</td></tr>
+                    <tr><td>🇮🇳 Independence Day</td><td>15 Aug’ 25 (Fri)</td></tr>
+                    <tr><td>🪈 Janmashtami</td><td>16 Aug’ 25 (Sat)</td></tr>
+                    <tr><td>🏹 Gandhi Jayanti / Dussehra</td><td>02 Oct’ 25 (Thu)</td></tr>
+                    <tr><td>🪔 Deepawali (Mid-Sem Break)</td><td style="color:var(--neon-yellow)">19 Oct - 26 Oct 2025</td></tr>
+                    <tr><td>✨ Guru Nanak Jayanti</td><td>05 Nov’ 25 (Wed)</td></tr>
+                    <tr><td>☃️ Winter Vacation</td><td style="color:var(--neon-blue)">14 Dec 2025 - 01 Jan 2026</td></tr>
+                    <tr><td>🎄 Christmas</td><td>25 Dec’ 25 (Thu)</td></tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center; color:var(--neon-pink); border-top: 1px solid var(--glass-border);">EVEN SEMESTER (2026)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>🇮🇳 Republic Day</td><td>26 Jan’ 26 (Mon)</td></tr>
+                    <tr><td>🔱 Maha Shivratri</td><td>15 Feb’ 26 (Sun)</td></tr>
+                    <tr><td>🎨 Holi (Mid-Sem Break)</td><td style="color:var(--neon-purple)">01 Mar - 08 Mar 2026</td></tr>
+                    <tr><td>🌙 Eid-Ul-Fitr *</td><td>21 Mar’ 26 (Sat)</td></tr>
+                    <tr><td>🏹 Ram Navami</td><td>26 Mar’ 26 (Thu)</td></tr>
+                    <tr><td>🕊️ Mahavir Jayanti</td><td>31 Mar’ 26 (Tue)</td></tr>
+                    <tr><td>⚖️ Ambedkar Jayanti</td><td>14 Apr’ 26 (Tue)</td></tr>
+                    <tr><td>🪷 Budh Purnima</td><td>01 May’ 26 (Fri)</td></tr>
+                    <tr><td>☀️ Summer Vacation</td><td style="color:var(--neon-yellow)">27 May - 22 Jul 2026</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="enjoy" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">How to Enjoy College Life 🎬</h2>
+            <p style="color:var(--text-muted);">Study hard, but vibe harder. Your essential watch list.</p>
+        </div>
+
+        <div class="club-category cat-mov">🎬 Must-Watch (College + Life Lessons)</div>
+        <div class="clubs-grid">
+            <div class="club-card" style="--theme-color: #f43f5e; --glow-color: rgba(244, 63, 94, 0.2);">
+                <div class="club-name">3 Idiots</div>
+                <div class="club-desc">"Bhai ye movie college ka Bible hai. Marks se zyada life important hai."</div>
+                <span class="ott-badge ott-prime">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Amazon_Prime_logo_%282024%29.svg/2560px-Amazon_Prime_logo_%282024%29.svg.png" class="ott-logo-img">
+                    Prime Video
+                </span> 
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #f97316; --glow-color: rgba(249, 115, 22, 0.2);">
+                <div class="club-name">Chhichhore</div>
+                <div class="club-desc">"Failures ≠ losers. Hostel + dosti = pure emotions."</div>
+                <span class="ott-badge ott-hotstar">
+                    <img src="https://static.vecteezy.com/system/resources/previews/046/437/282/non_2x/disney-plus-hotstar-app-icon-free-png.png" class="ott-logo-img">
+                    Hotstar
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #eab308; --glow-color: rgba(234, 179, 8, 0.2);">
+                <div class="club-name">Wake Up Sid</div>
+                <div class="club-desc">"Confused ho? Passion nahi mil raha? Ye movie soft slap degi 😭"</div>
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #d946ef; --glow-color: rgba(217, 70, 239, 0.2);">
+                <div class="club-name">Rockstar</div>
+                <div class="club-desc">"Pyaar, pain, passion… aur khud ko khona + paana."</div>
+                <span class="ott-badge ott-hotstar">
+                    <img src="https://tva.onscreenasia.com/wp-content/uploads/2023/08/JioCinema-Logo-1.png" class="ott-logo-img">
+                    JioCinema
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #06b6d4; --glow-color: rgba(6, 182, 212, 0.2);">
+                <div class="club-name">Yeh Jawaani Hai Deewani</div>
+                <div class="club-desc">"Travel, dosti, ambition… college ke baad bhi life hoti hai 💫"</div>
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+        </div>
+
+        <div class="club-category cat-mov">🌍 International (Mind Openers)</div>
+        <div class="clubs-grid">
+            <div class="club-card" style="--theme-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.2);">
+                <div class="club-name">Dead Poets Society</div>
+                <div class="club-desc">"Carpe Diem bhai… life jeeni hai, sirf survive nahi."</div>
+                <span class="ott-badge ott-hotstar">
+                    <img src="https://static.vecteezy.com/system/resources/previews/046/437/282/non_2x/disney-plus-hotstar-app-icon-free-png.png" class="ott-logo-img">
+                    Hotstar
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #3b82f6; --glow-color: rgba(59, 130, 246, 0.2);">
+                <div class="club-name">The Social Network</div>
+                <div class="club-desc">"College ideas = billion-dollar dreams 💻"</div>
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.2);">
+                <div class="club-name">Good Will Hunting</div>
+                <div class="club-desc">"Talent + self-doubt = deadly combo."</div>
+                <span class="ott-badge ott-prime">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Amazon_Prime_logo_%282024%29.svg/2560px-Amazon_Prime_logo_%282024%29.svg.png" class="ott-logo-img">
+                    Prime Video
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #f43f5e; --glow-color: rgba(244, 63, 94, 0.2);">
+                <div class="club-name">The Pursuit of Happyness</div>
+                <div class="club-desc">"Jab life sab kuch chheen le, tab bhi hope."</div>
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #eab308; --glow-color: rgba(234, 179, 8, 0.2);">
+                <div class="club-name">Into the Wild</div>
+                <div class="club-desc">"Freedom ka meaning badal dega 🌄"</div>
+                <span class="ott-badge ott-prime">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Amazon_Prime_logo_%282024%29.svg/2560px-Amazon_Prime_logo_%282024%29.svg.png" class="ott-logo-img">
+                    Prime Video
+                </span>
+            </div>
+        </div>
+
+        <div class="club-category cat-mov">📺 Web Series (Relatable AF)</div>
+        <div class="clubs-grid">
+            <div class="club-card" style="--theme-color: #000000; --glow-color: rgba(255, 255, 255, 0.2);">
+                <div class="club-name">Kota Factory</div>
+                <div class="club-desc">"Pressure, expectations, reality… sab sach."</div>
+                <span class="ott-badge ott-netflix">
+                    <img src="https://www.citypng.com/public/uploads/preview/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png" class="ott-logo-img">
+                    Netflix
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #f97316; --glow-color: rgba(249, 115, 22, 0.2);">
+                <div class="club-name">College Romance</div>
+                <div class="club-desc">"Crush, bakchodi, fights… pure campus vibes 😂"</div>
+                <span class="ott-badge ott-sony">
+                    <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/sony-liv-logo-hd.png" class="ott-logo-img">
+                    Sony LIV
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #3b82f6; --glow-color: rgba(59, 130, 246, 0.2);">
+                <div class="club-name">Hostel Daze</div>
+                <div class="club-desc">"Bhai ye toh hostel life documentary hai."</div>
+                <span class="ott-badge ott-prime">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Amazon_Prime_logo_%282024%29.svg/2560px-Amazon_Prime_logo_%282024%29.svg.png" class="ott-logo-img">
+                    Prime Video
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #eab308; --glow-color: rgba(234, 179, 8, 0.2);">
+                <div class="club-name">Aspirants</div>
+                <div class="club-desc">"Sapne, mehnat, friendship… goosebumps guaranteed."</div>
+                <span class="ott-badge ott-prime">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Amazon_Prime_logo_%282024%29.svg/2560px-Amazon_Prime_logo_%282024%29.svg.png" class="ott-logo-img">
+                    Prime Video
+                </span>
+            </div>
+            <div class="club-card" style="--theme-color: #22c55e; --glow-color: rgba(34, 197, 94, 0.2);">
+                <div class="club-name">Cubicles</div>
+                <div class="club-desc">"College ke baad ka reality check 🧠"</div>
+                <span class="ott-badge ott-sony">
+                    <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/sony-liv-logo-hd.png" class="ott-logo-img">
+                    Sony LIV
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="crazy" class="content-section">
+        <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:'Space Grotesk'; font-size:32px;">The College Soul-Pack 🎒❤️</h2>
+            <p style="color:var(--text-muted);">Movies, Music, Vibes aur Bhai wali Advice.</p>
+        </div>
+
+        <a href="https://youtube.com/playlist?list=PLba2somvholN2qL_faOBlF9uzzr0GPdZ1&si=bW2T3VpoSJUkw_HY" target="_blank" class="creator-playlist">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/960px-Logo_of_YouTube_%282015-2017%29.svg.png" class="yt-logo-lg" alt="YouTube">
+            <div>
+                <div style="font-weight:800; font-size:18px;">PLAYLIST BY CREATOR (ENGLISH)</div>
+                <div style="font-size:12px; opacity:0.8;">Handpicked English bangers for pure vibes. Click to Listen.</div>
+            </div>
+        </a>
+
+        <div class="club-category cat-music">🎧 Hostel Nights (2–3 AM Mode)</div>
+        <div class="clubs-grid">
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-purple)">🌙 Late-Night / Feels</h3>
+                <ul class="track-list">
+                    <li><a href="https://www.youtube.com/results?search_query=Kho+Gaye+Hum+Kahan" target="_blank">Kho Gaye Hum Kahan</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Kasoor+Prateek+Kuhad" target="_blank">Kasoor</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Baarishein+Anuv+Jain" target="_blank">Baarishein</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Gul+Anuv+Jain" target="_blank">Gul</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Alag+Aasmaan+Anuv+Jain" target="_blank">Alag Aasmaan</a></li>
+                </ul>
+            </div>
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-blue)">💔 Sad / Healing</h3>
+                <ul class="track-list">
+                    <li><a href="https://www.youtube.com/results?search_query=Channa+Mereya" target="_blank">Channa Mereya</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Let+Her+Go+Passenger" target="_blank">Let Her Go</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Someone+You+Loved+Lewis+Capaldi" target="_blank">Someone You Loved</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Night+Changes+One+Direction" target="_blank">Night Changes</a></li>
+                </ul>
+            </div>
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-orange)">😎 Happy / Bakchodi</h3>
+                <ul class="track-list">
+                    <li><a href="https://www.youtube.com/results?search_query=Ilahi+Yeh+Jawaani+Hai+Deewani" target="_blank">Ilahi</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Safarnama+Tamasha" target="_blank">Safarnama</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Phir+Se+Ud+Chala+Rockstar" target="_blank">Phir Se Ud Chala</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Khaabon+Ke+Parinday" target="_blank">Khaabon Ke Parinday</a></li>
+                </ul>
+            </div>
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-green)">🔥 Focus / Motivation</h3>
+                <ul class="track-list">
+                    <li><a href="https://www.youtube.com/results?search_query=Snowfall+Oneheart" target="_blank">Snowfall</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Experience+Ludovico+Einaudi" target="_blank">Experience</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Time+Hans+Zimmer" target="_blank">Time</a></li>
+                    <li><a href="https://www.youtube.com/results?search_query=Weightless+Marconi+Union" target="_blank">Weightless</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="text-align:center; color:#888; font-size:12px; margin-bottom:30px;">👉 Best time: Jab room silent ho aur future ka pressure dimag kha raha ho.</p>
+
+        <div class="club-category cat-bhai">🎓 Before You Graduate & Habits</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-red)">🏆 Top 10 Must-Watch</h3>
+                <ul class="track-list" style="color:#fff;">
+                    <li>1. 3 Idiots – Pressure se upar life.</li>
+                    <li>2. Chhichhore – Failures don’t define you.</li>
+                    <li>3. Dead Poets Society – Carpe Diem.</li>
+                    <li>4. Tamasha – Khud ko pehchaan.</li>
+                    <li>5. YJHD – Dost + dreams.</li>
+                    <li>6. Good Will Hunting – Potential matters.</li>
+                    <li>7. ZNMD – Fear tod.</li>
+                    <li>8. The Social Network – Ideas = power.</li>
+                    <li>9. Into the Wild – Freedom ka meaning.</li>
+                    <li>10. About Time – Ordinary days are gold.</li>
+                </ul>
+            </div>
+            <div class="playlist-box">
+                <h3 style="color:var(--neon-blue)">🧠 Daily Legendary Habits</h3>
+                <ul class="habit-list track-list">
+                    <li>📓 <b>Weekly Journal:</b> Kya seekha, kya feel hua (10 min).</li>
+                    <li>🤝 <b>Network:</b> Har week 1 new convo (Senior/Junior).</li>
+                    <li>🎧 <b>Solo Walk:</b> Late-night, bina phone, bina noise.</li>
+                    <li>📸 <b>Live More:</b> Photos kam le, moments zyada jee.</li>
+                    <li>🚫 <b>No Compare:</b> Social media limit rakh.</li>
+                    <li>🧠 <b>Skill Slot:</b> 30 min/day (Coding/Design/Writing).</li>
+                    <li>❤️ <b>Dost:</b> Exam ke baad chai zaroor.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="club-category cat-bhai">❤️ Bhai Wali Final Baat</div>
+        <div class="bhai-quote">
+            "College ka rule simple hai:<br><br>
+            Bakchodi bina guilt,<br>
+            Padhai bina panic,<br>
+            Pyaar bina expectation,<br>
+            Sapne bina limit.<br><br>
+            Tu akela nahi hai bhai. Hum saath grow kar rahe hain. 💪❤️"
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p class="footer-msg">MADE WITH LOVE FOR ALL JIITIANS ❤️</p>
+        <div class="creator-box">
+            <span class="creator-label">CREATOR (GOD OF THIS SITE):</span>
+            <a href="https://www.instagram.com/iamshauryaaa.__?igsh=N3oyOWkxeXB5dHpw" target="_blank" class="creator-link-main">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" class="main-insta-icon" alt="Insta">
+                KUMAR SHAURYA
+            </a>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // --- TIMETABLE DATA ---
+    const schedule = {
+        // --- EXISTING E & H BATCHES (KEPT FROM ORIGINAL) ---
+        "E1": {
+            "Monday": [
+                {t: "10:00-11:50 AM", s: "SD Lab-2", f: "HMB/SAP/NMD/JATIN", r: "CL1", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "Physics-II", f: "SHALU", r: "118", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "Mathematics-II", f: "PKS", r: "118", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "10:00-10:50 AM", s: "UHV", f: "SHV", r: "116", type: "Tutorial"},
+                {t: "12:00-12:50 PM", s: "SDF-2", f: "NMD", r: "SR05", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "UHV", f: "NIC", r: "SR05", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "BAIBHAV", r: "3045", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "PKS", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SHALU", r: "3023", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "SDF-2", f: "NMD", r: "3023", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "UHV", f: "PRK", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Mathematics-II", f: "AMB", r: "118", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "Physics-II", f: "SHALU", r: "3084", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Mathematics-II", f: "PKS", r: "3084", type: "Lecture"}
+            ]
+        },
+        "E2": {
+             "Monday": [
+                {t: "10:00-11:50 AM", s: "SD Lab-2", f: "HMB/SAP/NMD/JATIN", r: "CL1", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "Physics-II", f: "SHALU", r: "118", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "Mathematics-II", f: "PKS", r: "118", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "10:00-10:50 AM", s: "UHV", f: "PRS", r: "121", type: "Tutorial"},
+                {t: "12:00-12:50 PM", s: "SDF-2", f: "NMD", r: "SR05", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "UHV", f: "NIC", r: "SR05", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "JATIN", r: "3083", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "PKS", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SHALU", r: "3023", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "SDF-2", f: "NMD", r: "3023", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Physics-II", f: "SHALU", r: "121", type: "Tutorial"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "UHV", f: "PRK", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Mathematics-II", f: "AMB", r: "127", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "Physics-II", f: "SHALU", r: "3084", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Mathematics-II", f: "PKS", r: "3084", type: "Lecture"}
+            ]
+        },
+        "E3": {
+             "Monday": [
+                {t: "10:00-11:50 AM", s: "SD Lab-2", f: "HMB/SAP/NMD/JATIN", r: "CL1", type: "Practical"},
+                {t: "12:00-12:50 PM", s: "Mathematics-II", f: "AMB", r: "3092", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics-II", f: "URS", r: "3092", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "ANK", r: "3028", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "10:00-10:50 AM", s: "Mathematics-II", f: "PKS", r: "127", type: "Tutorial"},
+                {t: "2:00-2:50 PM", s: "UHV", f: "NIC", r: "3092", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "Physics Lab-2", f: "SHALU", r: "41", type: "Practical"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "AMB", r: "230", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "URS", r: "230", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "SDF-2", f: "ANK/BAIBHAV", r: "217", type: "Tutorial"},
+                {t: "4:00-4:50 PM", s: "UHV", f: "PRS", r: "116", type: "Tutorial"}
+            ],
+            "Thursday": [
+                 {t: "2:00-2:50 PM", s: "SDF-2", f: "ANK", r: "217", type: "Lecture"},
+                 {t: "4:00-4:50 PM", s: "Physics-II", f: "URS", r: "3084", type: "Lecture"},
+                 {t: "4:00-4:50 PM", s: "Mathematics-II", f: "AMB", r: "3084", type: "Lecture"}
+            ],
+             "Friday": [
+                {t: "1:00-1:50 PM", s: "Physics-II", f: "KAS", r: "3084", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "Mathematics-II", f: "AMB", r: "3084", type: "Lecture"}
+             ]
+        },
+        "H1": {
+            "Monday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "KKS", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKA", r: "3023", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "SDF-2", f: "HMB", r: "3092", type: "Lecture"}
+            ],
+            "Wednesday": [
+                {t: "12:00-12:50 PM", s: "Mathematics-II", f: "LKK", r: "121", type: "Tutorial"},
+                {t: "1:00-1:50 PM", s: "Physics-II", f: "SKA", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "HMB", r: "3092", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "KKS", r: "3028", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKA", r: "3028", type: "Lecture"},
+                {t: "12:00-12:50 PM", s: "SDF-2", f: "HMB", r: "3028", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "Physics Lab-2", f: "PKC", r: "027A", type: "Practical"}
+            ],
+            "Friday": [
+                {t: "2:00-3:50 PM", s: "SD Lab-2", f: "HIB/SHJ/GAH", r: "CL1", type: "Practical"}
+            ],
+            "Saturday": [
+                {t: "10:00-10:50 AM", s: "UHV", f: "SKA", r: "116", type: "Tutorial"},
+                {t: "3:00-3:50 PM", s: "SDF-2", f: "JATIN", r: "3045", type: "Tutorial"},
+                {t: "4:00-4:50 PM", s: "UHV", f: "DEV", r: "116", type: "Tutorial"}
+            ]
+        },
+        "H2": {
+            "Monday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "KKS", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKA", r: "3023", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "SDF-2", f: "HMB", r: "3092", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "UHV", f: "AKS", r: "121", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "Physics-II", f: "SKA", r: "3084", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "Workshop", f: "SUM", r: "WS04", type: "Practical"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "HMB", r: "3092", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Mathematics-II", f: "KKS", r: "3028", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKA", r: "3028", type: "Lecture"},
+                {t: "12:00-12:50 PM", s: "SDF-2", f: "HMB", r: "3028", type: "Lecture"}
+            ],
+            "Friday": [
+                {t: "2:00-3:50 PM", s: "SD Lab-2", f: "HIB/SHJ/GAH", r: "CL1", type: "Practical"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "VAIBHAV", r: "3045", type: "Tutorial"}
+            ]
+        },
+         "H3": {
+            "Monday": [
+                {t: "12:00-12:50 PM", s: "Mathematics-II", f: "NEA/ATH", r: "3023", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "Physics Lab-2", f: "ADV", r: "027A", type: "Practical"}
+            ],
+            "Tuesday": [
+                 {t: "10:00-10:50 AM", s: "SDF-2", f: "DVG/BAIBHAV", r: "3023", type: "Tutorial"},
+                 {t: "11:00-11:50 AM", s: "Mathematics-II", f: "NEA/ATH", r: "3028", type: "Lecture"},
+                 {t: "12:00-12:50 PM", s: "Physics-II", f: "SKH", r: "3028", type: "Lecture"},
+                 {t: "2:00-2:50 PM", s: "SDF-2", f: "DVG", r: "3028", type: "Lecture"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "DVG", r: "3092", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKH", r: "3092", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Mathematics-II", f: "NEA/ATH", r: "3092", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "3:00-3:50 PM", s: "Mathematics-II", f: "ASI", r: "126", type: "Tutorial"},
+                {t: "4:00-4:50 PM", s: "Physics-II", f: "SKH", r: "126", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "11:00-11:50 AM", s: "UHV", f: "PRS", r: "3045", type: "Lecture"},
+                {t: "12:00-12:50 PM", s: "Physics-II", f: "SKH", r: "3045", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "SDF-2", f: "DVG", r: "3045", type: "Lecture"},
+                {t: "2:00-3:50 PM", s: "SD Lab-2", f: "HIB/SHJ/GAH", r: "CL1", type: "Practical"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Workshop", f: "HAB", r: "WS06", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "DEV", r: "116", type: "Tutorial"}
+            ]
+        },
+        "H4": {
+            "Monday": [
+                {t: "12:00-12:50 PM", s: "Mathematics-II", f: "NEA/ATH", r: "3023", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "URS", r: "256C", type: "Practical"}
+            ],
+            "Tuesday": [
+                 {t: "11:00-11:50 AM", s: "Mathematics-II", f: "NEA/ATH", r: "3028", type: "Lecture"},
+                 {t: "12:00-12:50 PM", s: "Physics-II", f: "SKH", r: "3028", type: "Lecture"},
+                 {t: "2:00-2:50 PM", s: "SDF-2", f: "DVG", r: "3028", type: "Lecture"},
+                 {t: "3:00-3:50 PM", s: "Mathematics-II", f: "UMK", r: "127", type: "Tutorial"},
+                 {t: "4:00-4:50 PM", s: "UHV", f: "NIC", r: "3092", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "DVG", r: "3092", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-II", f: "SKH", r: "3092", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Mathematics-II", f: "NEA/ATH", r: "3092", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "LSPC", f: "HIMANSHI", r: "246", type: "Practical"}
+            ],
+            "Thursday": [
+                {t: "1:00-1:50 PM", s: "Physics-II", f: "KAS", r: "126", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "10:00-10:50 AM", s: "UHV", f: "SHV", r: "121", type: "Tutorial"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "PRS", r: "3045", type: "Lecture"},
+                {t: "12:00-12:50 PM", s: "Physics-II", f: "SKH", r: "3045", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "SDF-2", f: "DVG", r: "3045", type: "Lecture"},
+                {t: "2:00-3:50 PM", s: "SD Lab-2", f: "HIB/SHJ/GAH", r: "CL1", type: "Practical"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Workshop", f: "RAK", r: "WS05", type: "Practical"}
+            ]
+        },
+        
+        // --- NEW F BATCHES (UPDATED PER REQUEST) ---
+        "F1": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3092", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "PKS", r: "118", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "9:00-9:50 AM", s: "Physics-2", f: "SKA", r: "3023", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "116", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "9:00-9:50 AM", s: "Physics-2", f: "SHALU", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Maths-2", f: "PKS", r: "3023", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS SCHOLAR", r: "240", type: "Lecture"},
+                {t: "3:00-3:50 PM", s: "SDF-2", f: "NMD", r: "3023", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3092", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3092", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3092", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "116", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3084", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3084", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3028", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3028", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3028", type: "Lecture"},
+                {t: "12:00-12:50 PM", s: "Physics-2", f: "SKA", r: "116", type: "Lecture"}
+            ]
+        },
+        "F2": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3092", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "116", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "240", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3092", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3092", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3092", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "116", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3084", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3084", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3028", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3028", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3028", type: "Lecture"}
+            ]
+        },
+        "F3": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3091", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "117", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "241", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3091", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3091", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3091", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "117", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3083", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3083", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3027", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3027", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3027", type: "Lecture"}
+            ]
+        },
+        "F4": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3091", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "117", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "241", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3091", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3091", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3091", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "117", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3083", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3083", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3027", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3027", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3027", type: "Lecture"}
+            ]
+        },
+        "F5": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3090", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "118", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "242", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3090", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3090", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3090", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "118", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3082", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3082", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3026", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3026", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3026", type: "Lecture"}
+            ]
+        },
+        "F6": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3090", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "118", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "242", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3090", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3090", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3090", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "118", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3082", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "256A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3082", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3026", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3026", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3026", type: "Lecture"}
+            ]
+        },
+        "F7": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3089", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3081", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "119", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "243", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3089", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3089", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3089", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "119", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3081", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3081", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3081", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3025", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3025", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3025", type: "Lecture"}
+            ]
+        },
+        "F8": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3089", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3081", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "119", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "243", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3089", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3089", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3089", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "119", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3081", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3081", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3081", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3025", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3025", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3025", type: "Lecture"}
+            ]
+        },
+        "F9": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3088", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3080", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "120", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "244", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3088", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3088", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3088", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "120", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3080", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3080", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3080", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3024", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3024", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3024", type: "Lecture"}
+            ]
+        },
+        "F10": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3088", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3080", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "120", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "244", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3088", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3088", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3088", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "120", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3080", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3080", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3080", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3024", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3024", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3024", type: "Lecture"}
+            ]
+        },
+        "F11": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3087", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3079", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "121", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "245", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3087", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3087", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3087", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "121", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3079", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3079", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3079", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3023", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3023", type: "Lecture"}
+            ]
+        },
+        "F12": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3087", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "027F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3079", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "121", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "245", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3087", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3087", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3087", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "121", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3079", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3079", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "255A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3079", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3023", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3023", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3023", type: "Lecture"}
+            ]
+        },
+        "F13": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3086", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3078", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "122", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "246", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3086", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3086", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3086", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "122", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3078", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3078", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3078", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3022", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3022", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3022", type: "Lecture"}
+            ]
+        },
+        "F14": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3086", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3078", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "122", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "246", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3086", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3086", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3086", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "122", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3078", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3078", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3078", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3022", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3022", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3022", type: "Lecture"}
+            ]
+        },
+        "F15": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3085", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3077", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "123", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "247", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3085", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3085", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3085", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "123", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3077", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3077", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3077", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3021", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3021", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3021", type: "Lecture"}
+            ]
+        },
+        "F16": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3085", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026B", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3077", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "123", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "247", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3085", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3085", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3085", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "123", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3077", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3077", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3077", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3021", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3021", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3021", type: "Lecture"}
+            ]
+        },
+        "F17": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3076", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "124", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "248", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3084", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3084", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "124", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3076", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3076", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3076", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3020", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3020", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3020", type: "Lecture"}
+            ]
+        },
+        "F18": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3084", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026C", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3076", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "124", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "248", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3084", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3084", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3084", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "124", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3076", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3076", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "254A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3076", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3020", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3020", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3020", type: "Lecture"}
+            ]
+        },
+        "F19": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3075", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "125", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "249", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3083", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3083", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3083", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "125", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3075", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3075", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "253C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3075", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3019", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3019", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3019", type: "Lecture"}
+            ]
+        },
+        "F20": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3083", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026D", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3075", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "125", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "249", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3083", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3083", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3083", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "125", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3075", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3075", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "253C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3075", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3019", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3019", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3019", type: "Lecture"}
+            ]
+        },
+        "F21": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3074", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "126", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "250", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3082", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3082", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3082", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "126", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3074", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3074", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "253B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3074", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3018", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3018", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3018", type: "Lecture"}
+            ]
+        },
+        "F22": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3082", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026E", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3074", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "126", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "250", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3082", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3082", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3082", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "126", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3074", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3074", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "253B", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3074", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3018", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3018", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3018", type: "Lecture"}
+            ]
+        },
+        "F24": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3081", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "026F", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3073", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "127", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "251", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3081", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3081", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3081", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "127", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3073", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3073", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "253A", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3073", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3017", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3017", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3017", type: "Lecture"}
+            ]
+        },
+        "F25": {
+            "Monday": [
+                {t: "10:00-10:50 AM", s: "Workshop", f: "PRJ", r: "WS04", type: "Practical"},
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "025A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3080", type: "Lecture"}
+            ],
+            "Tuesday": [
+                {t: "11:00-11:50 AM", s: "Physics Lab-2", f: "AK", r: "025A", type: "Practical"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "SHJ", r: "3072", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "SDF-2", f: "SSJ / ZUBAIR", r: "128", type: "Tutorial"}
+            ],
+            "Wednesday": [
+                {t: "1:00-1:50 PM", s: "UHV", f: "HSS Scholar", r: "252", type: "Lecture"}
+            ],
+            "Thursday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3080", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3080", type: "Lecture"},
+                {t: "2:00-2:50 PM", s: "SDF-2", f: "AKB", r: "3080", type: "Lecture"},
+                {t: "4:00-4:50 PM", s: "Maths-2", f: "PKS", r: "128", type: "Tutorial"}
+            ],
+            "Friday": [
+                {t: "9:00-9:50 AM", s: "SDF-2", f: "SHJ", r: "3072", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "Physics-2", f: "VM", r: "3072", type: "Lecture"},
+                {t: "1:00-1:50 PM", s: "Physics Lab-2", f: "SHALU", r: "252C", type: "Practical"},
+                {t: "3:00-3:50 PM", s: "Maths-2", f: "SHP", r: "3072", type: "Lecture"}
+            ],
+            "Saturday": [
+                {t: "9:00-9:50 AM", s: "Maths-2", f: "SHP", r: "3016", type: "Lecture"},
+                {t: "10:00-10:50 AM", s: "Physics-2", f: "VM", r: "3016", type: "Lecture"},
+                {t: "11:00-11:50 AM", s: "UHV", f: "NEA", r: "3016", type: "Lecture"}
+            ]
+        }
+    };
+
+    let activeDay = 'Monday';
+
+    function showSection(id) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        const navs = document.querySelectorAll('.nav-link');
+        navs.forEach(n => {
+            if(n.textContent.toLowerCase().includes(id.replace('cgpa','push').replace('crazy','stuff').replace('menu','mess').replace('cafe', 'café').replace('placements', 'final').replace('travel', 'buddy')) || 
+               (id === 'scheduler' && n.textContent.includes('Scheduler'))) {
+                n.classList.add('active');
+            }
+        });
+    }
+
+    function scrollNavRight() {
+        document.getElementById('navScroller').scrollLeft += 200;
+    }
+
+    function setDay(day) {
+        activeDay = day;
+        document.querySelectorAll('.d-btn').forEach(b => b.classList.toggle('active', b.innerText === day));
+        renderSchedule();
+    }
+
+    function getCardColor(subject) {
+        const s = subject.toLowerCase();
+        if(s.includes('math')) return '#3b82f6';
+        if(s.includes('phys')) return '#ec4899';
+        if(s.includes('sdf') || s.includes('lab')) return '#a855f7';
+        if(s.includes('uhv')) return '#f59e0b';
+        return '#ccc';
+    }
+
+    function renderSchedule() {
+        const batch = document.getElementById('batchSelect').value;
+        const query = document.getElementById('search').value.toLowerCase();
+        const container = document.getElementById('scheduleGrid');
+        container.innerHTML = '';
+
+        const data = (schedule[batch] && schedule[batch][activeDay]) || [];
+        
+        data.sort((a, b) => {
+            const tA = parseInt(a.t.split(':')[0]) + (a.t.includes('PM') && !a.t.startsWith('12') ? 12 : 0);
+            const tB = parseInt(b.t.split(':')[0]) + (b.t.includes('PM') && !b.t.startsWith('12') ? 12 : 0);
+            return tA - tB;
+        });
+
+        data.forEach(item => {
+            const searchSource = `${item.f} ${item.s} ${item.r} ${item.type}`.toLowerCase();
+            if(query && !searchSource.includes(query)) return;
+            
+            const color = getCardColor(item.s);
+            
+            // New Vertical Layout Injection
+            container.innerHTML += `
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="--card-color: ${color}"></div>
+                    <div class="timeline-time" style="--card-color: ${color}">${item.t}</div>
+                    <div class="class-card" style="--card-color: ${color}">
+                        <div class="card-t">${item.type}</div>
+                        <div class="card-s">${item.s}</div>
+                        <div class="card-d">
+                            <span>👤 ${item.f}</span>
+                            <span>📍 Room ${item.r}</span>
+                        </div>
+                    </div>
+                </div>`;
+        });
+
+        if(!container.innerHTML) {
+            container.innerHTML = '<div style="text-align:center; padding:50px; opacity:0.6;">No classes found. Time to chill! 🎮</div>';
+        }
+    }
+
+    // --- MUSIC TOGGLE ---
+    const audio = document.getElementById('chillAudio');
+    const musicBtn = document.querySelector('.music-btn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+        if (isPlaying) {
+            audio.pause();
+            musicBtn.classList.remove('playing');
+            document.getElementById('musicIcon').textContent = '🎵';
+            musicBtn.innerHTML = '<span id="musicIcon">🎵</span> Play Music';
+        } else {
+            audio.play().catch(e => console.log("Audio play failed (browser blocked):", e));
+            musicBtn.classList.add('playing');
+            document.getElementById('musicIcon').textContent = '⏸️';
+            musicBtn.innerHTML = '<span id="musicIcon">⏸️</span> Pause Vibes';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // --- VIBE CHECK 2.0 (EMOJIS) ---
+    function fireConfetti() {
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let p = [];
+        const emojis = ['🎆', '🍾', '🍕', '🥤', '🎉', '💃', '✨', '🔥'];
+        
+        for(let i=0; i<80; i++) {
+            p.push({
+                x: canvas.width/2, y: canvas.height/2,
+                vx: (Math.random()-0.5)*30, vy: (Math.random()-0.5)*30,
+                text: emojis[Math.floor(Math.random()*emojis.length)],
+                size: Math.random()*20 + 20
+            });
+        }
+        function anim() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            p.forEach((pt,i) => {
+                pt.x += pt.vx; pt.y += pt.vy; pt.vy += 0.5;
+                ctx.font = `${pt.size}px Arial`;
+                ctx.fillText(pt.text, pt.x, pt.y);
+                if(pt.y > canvas.height) p.splice(i,1);
+            });
+            if(p.length) requestAnimationFrame(anim);
+        }
+        anim();
+    }
+
+    // --- CALCULATOR LOGIC ---
+    function calculateCGPA() {
+        const currCGPA = parseFloat(document.getElementById('currCGPA').value) || 0;
+        const currCredits = parseFloat(document.getElementById('currCredits').value) || 0;
+        const nextSGPA = parseFloat(document.getElementById('nextSGPA').value) || 0;
+        const nextCredits = parseFloat(document.getElementById('nextCredits').value) || 0;
+
+        if(!currCredits || !nextCredits) {
+            document.getElementById('calcResult').innerText = "Enter credits properly!";
+            return;
+        }
+
+        const totalPoints = (currCGPA * currCredits) + (nextSGPA * nextCredits);
+        const totalCredits = currCredits + nextCredits;
+        const newCGPA = (totalPoints / totalCredits).toFixed(2);
+
+        document.getElementById('calcResult').innerHTML = 
+            `Predicted CGPA: <span style="color:#fff">${newCGPA}</span>`;
+    }
+
+    // --- NOTIFICATION LOGIC ---
+    function showNotification(message) {
+        const bar = document.getElementById('notification-bar');
+        const text = document.getElementById('notif-text');
+        text.innerText = message;
+        bar.style.display = 'block';
+        setTimeout(() => { bar.style.display = 'none'; }, 4000);
+    }
+
+    // --- TRAVEL BUDDY LOGIC ---
+    function postRide() {
+        const name = document.getElementById('posterName').value;
+        const from = document.getElementById('rideFrom').value;
+        const to = document.getElementById('rideTo').value;
+        const time = document.getElementById('rideTime').value;
+        const mode = document.getElementById('rideMode').value;
+
+        if(!name || !from || !to || !time) {
+            alert("Please fill all details including your name!");
+            return;
+        }
+
+        const ride = { 
+            id: Date.now(), 
+            name, 
+            from, 
+            to, 
+            time, 
+            mode, 
+            status: 'Open',
+            views: 1, // Initial view
+            chat: [] 
+        };
+        
+        try {
+            let rides = JSON.parse(localStorage.getItem('rides') || "[]");
+            rides.push(ride);
+            localStorage.setItem('rides', JSON.stringify(rides));
+            
+            // Clear inputs
+            document.getElementById('posterName').value = '';
+            document.getElementById('rideTo').value = '';
+            
+            renderRides();
+            showNotification("Your ride request is live!");
+            
+            // Auto scroll to list
+            setTimeout(() => {
+                document.getElementById('rideList').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        } catch (e) {
+            console.error("Storage error", e);
+            alert("Error posting ride. Try clearing browser data.");
+        }
+    }
+
+    function renderRides() {
+        const list = document.getElementById('rideList');
+        let rides = [];
+        try {
+            rides = JSON.parse(localStorage.getItem('rides') || "[]");
+        } catch(e) {
+            localStorage.setItem('rides', "[]");
+        }
+        
+        if(rides.length === 0) {
+            list.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">No active ride requests right now. Be the first!</div>';
+            return;
+        }
+
+        // Reverse to show newest first
+        list.innerHTML = rides.slice().reverse().map(r => `
+            <div class="ride-card">
+                <div class="ride-header">
+                    <div class="ride-info">
+                        <div class="ride-route">${r.from} ➝ ${r.to}</div>
+                        <div class="ride-meta">
+                            <span class="ride-poster">👤 ${r.name}</span>
+                            <span>⏰ ${r.time}</span>
+                            <span>🚖 ${r.mode}</span>
+                            <span class="ride-views">👁️ ${r.views}</span>
+                            <span style="color:${r.status==='Open'?'var(--neon-green)':'var(--neon-red)'}">
+                                ● ${r.status}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ride-actions">
+                        ${r.status === 'Accepted' ? 
+                            `<button class="chat-btn active" onclick="toggleChat(${r.id})">💬 Chat</button>` : ''
+                        }
+                        ${r.status === 'Open' ? 
+                            `<button class="join-btn" onclick="acceptRide(${r.id})">JOIN RIDE</button>` : 
+                            `<button class="join-btn accepted">FULL (${r.joinedBy})</button>`
+                        }
+                    </div>
+                </div>
+                
+                <div class="chat-section" id="chat-${r.id}">
+                    <div class="chat-messages" id="msgs-${r.id}">
+                        ${r.chat.map(msg => `<div class="chat-msg"><b>${msg.user}:</b> ${msg.text}</div>`).join('')}
+                        ${r.chat.length === 0 ? '<div style="color:#666">Chat started. Coordinate here!</div>' : ''}
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="input-${r.id}" class="chat-input" placeholder="Type a message...">
+                        <button onclick="sendMessage(${r.id})" class="chat-send">Send</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function acceptRide(id) {
+        const joinerName = prompt("Please enter your name to join:");
+        if(!joinerName) return;
+
+        let rides = JSON.parse(localStorage.getItem('rides') || "[]");
+        const idx = rides.findIndex(r => r.id === id);
+        if(idx !== -1) {
+            rides[idx].status = 'Accepted';
+            rides[idx].joinedBy = joinerName;
+            rides[idx].chat.push({user: 'System', text: `${joinerName} has joined the ride!`});
+            
+            localStorage.setItem('rides', JSON.stringify(rides));
+            renderRides();
+            showNotification(`You joined ${rides[idx].name}'s ride!`);
+        }
+    }
+
+    function toggleChat(id) {
+        const chatDiv = document.getElementById(`chat-${id}`);
+        chatDiv.style.display = chatDiv.style.display === 'none' || chatDiv.style.display === '' ? 'block' : 'none';
+    }
+
+    function sendMessage(id) {
+        const input = document.getElementById(`input-${id}`);
+        const text = input.value.trim();
+        if(!text) return;
+
+        let rides = JSON.parse(localStorage.getItem('rides') || "[]");
+        const idx = rides.findIndex(r => r.id === id);
+        
+        if(idx !== -1) {
+            // Simple logic: Use stored name or ask once
+            let user = localStorage.getItem('chatUser');
+            if(!user) {
+                user = prompt("Your Name for Chat:", "Student");
+                if(user) localStorage.setItem('chatUser', user);
+            }
+            if(!user) user = "User";
+
+            rides[idx].chat.push({ user: user, text: text });
+            localStorage.setItem('rides', JSON.stringify(rides));
+            input.value = '';
+            renderRides();
+            
+            // Keep chat open after re-render
+            setTimeout(() => { document.getElementById(`chat-${id}`).style.display = 'block'; }, 50);
+        }
+    }
+
+    // --- LIVE VIEW SIMULATOR ---
+    function simulateViews() {
+        setInterval(() => {
+            let rides = JSON.parse(localStorage.getItem('rides') || "[]");
+            let updated = false;
+            rides.forEach(r => {
+                if(r.status === 'Open' && Math.random() > 0.7) {
+                    r.views += Math.floor(Math.random() * 3) + 1;
+                    updated = true;
+                }
+            });
+            if(updated) {
+                localStorage.setItem('rides', JSON.stringify(rides));
+                renderRides(); // Re-render to show new view counts
+            }
+        }, 5000); // Update every 5 seconds
+    }
+
+    // --- TIMER LOGIC ---
+    function startTimer() {
+        const examDate = new Date("Feb 10, 2026 09:00:00").getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const dist = examDate - now;
+
+            const days = Math.floor(dist / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((dist % (1000 * 60)) / 1000);
+
+            document.getElementById("t-days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("t-hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("t-mins").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("t-secs").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+    }
+
+    function init() {
+        const sel = document.getElementById('batchSelect');
+        const sorted = Object.keys(schedule).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+        sorted.forEach(b => {
+            const opt = document.createElement('option');
+            opt.value = b; opt.textContent = `Batch ${b}`;
+            sel.appendChild(opt);
+        });
+
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const today = days[new Date().getDay()];
+        if(today !== 'Sunday') setDay(today);
+        if(sorted.length) { sel.value = sorted[0]; renderSchedule(); }
+
+        // --- CLEAR EXISTING TRAVEL REQUESTS (AS REQUESTED) ---
+        localStorage.removeItem('rides'); 
+
+        startTimer();
+        renderRides(); 
+        simulateViews();
+    }
+    
+    init();
+</script>
+</body>
+</html>
